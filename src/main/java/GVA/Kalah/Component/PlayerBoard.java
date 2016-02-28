@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class PlayerBoard {
     @JsonIgnore
-    private final int stonesNumber = 6;
+    private final int stonesNumber = 1;
     @JsonIgnore
     private final int pitsNumber = 6;
     @JsonIgnore

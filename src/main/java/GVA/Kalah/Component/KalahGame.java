@@ -2,7 +2,6 @@ package GVA.Kalah.Component;
 
 import GVA.Kalah.Exception.CantAddMorePlayerException;
 import GVA.Kalah.Exception.EmptyPitException;
-import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -17,21 +16,20 @@ public class KalahGame {
     private String whoseMove;
 
     //first move has player who created game
-    public void addPlayer(String playerName) throws CantAddMorePlayerException{
-        if (map.size() < 2){
+    public void addPlayer(String playerName) throws CantAddMorePlayerException {
+        if (map.size() < 2) {
             if (map.size() == 0)
                 whoseMove = playerName;
             PlayerBoard playerBoard = new PlayerBoard();
             map.put(playerName, playerBoard);
-        }
-        else throw new CantAddMorePlayerException();
+        } else throw new CantAddMorePlayerException();
     }
 
-    public boolean containsTwoPlayers(){
+    public boolean containsTwoPlayers() {
         return map.size() == 2;
     }
 
-    public boolean containsPlayer(String player){
+    public boolean containsPlayer(String player) {
         return map.containsKey(player);
     }
 
@@ -39,7 +37,7 @@ public class KalahGame {
         return map.get(getOpponent(player));
     }
 
-    private String getOpponent(String player){
+    private String getOpponent(String player) {
         String opponent = null;
         for (String str : map.keySet()) {
             if (str.equals(player))
@@ -83,19 +81,21 @@ public class KalahGame {
         whoseMove = getOpponent(player);
     }
 
-    public boolean isFinished() {
-        boolean flag = false;
-        Iterator<Map.Entry<String, PlayerBoard>> iterator = map.entrySet().iterator();
-        while (iterator.hasNext()) {
-            Map.Entry<String, PlayerBoard> entry = iterator.next();
-            if (entry.getValue().allPitsAreEmpty()) {
-                flag = true;
-                break;
-            }
-        }
-        return flag;
-    }
 
+    public String getWinner(String player) {
+        String msg = null;
+        PlayerBoard playerBoard = map.get(player);
+        PlayerBoard opponentBoard = getOpponentPlayerBoard(player);
+        if (playerBoard.allPitsAreEmpty() || opponentBoard.allPitsAreEmpty()){
+            if (playerBoard.getTotalStones() > opponentBoard.getTotalStones())
+                msg = player + " has won! Total stones " + playerBoard.getTotalStones();
+            else if (playerBoard.getTotalStones() < opponentBoard.getTotalStones())
+                msg = getOpponent(player) + " has won! Total stones " + opponentBoard.getTotalStones();
+            else
+                msg = "drawn game";
+        }
+        return msg;
+    }
 
     public void setLastTimeModified(long lastTimeModified) {
         this.lastTimeModified = lastTimeModified;

@@ -43,14 +43,23 @@ public class ControllerApi {
             throw new WrongPlayerNameException();
     }
 
-    public void whoseMoveCheck(String player, KalahGame kalahGame) throws NotPlayerMoveException{
-        if (! kalahGame.getWhoseMove().equals(player))
+    public void whoseMoveCheck(String player, KalahGame kalahGame) throws NotPlayerMoveException {
+        if (!kalahGame.getWhoseMove().equals(player))
             throw new NotPlayerMoveException();
     }
 
+    public void finishCheck(String player, KalahGame kalahGame) throws GameIsFinishedException {
+        String msg = kalahGame.getWinner(player);
+        if (msg != null)
+            throw new GameIsFinishedException(msg);
+    }
+
     @RequestMapping(value = "/{id}/{player}", method = RequestMethod.GET)
-    public BoardLayout getBoardLayout(@PathVariable long id, @PathVariable String player)throws NoSuchIdException{
+    public BoardLayout getBoardLayout(@PathVariable long id, @PathVariable String player)
+            throws NoSuchIdException, GameIsFinishedException {
         idCheck(id);
+        KalahGame kalahGame = cash.getGame(id);
+        finishCheck(player, kalahGame);
         return cash.getGame(id).getBoardLayout(player);
     }
 
@@ -68,8 +77,8 @@ public class ControllerApi {
 
     @RequestMapping(value = "/{id}/{player}/{pit}", method = RequestMethod.POST)
     public boolean makeMove(@PathVariable long id,
-                           @PathVariable String player,
-                           @PathVariable int pit)
+                            @PathVariable String player,
+                            @PathVariable int pit)
             throws NoSuchIdException, WrongPlayerNameException, EmptyPitException,
             NotPlayerMoveException {
         idCheck(id);

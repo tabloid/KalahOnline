@@ -62,15 +62,13 @@ Controller.registerPlayer = function(id){
             }
         })
         .fail(function(data) {
-            alert(data.responseText);
+            alert(data.responseJSON.message);
         });
     }
 }
 Controller.printBoardLayout = function(){
     var url = Controller.createGameUrl + Controller.gameId + "/" + Controller.player;
     $.get(url, function(object) {
-        var board = $("#board");
-        board.css("visibility", "visible ");
         var html = "<p>" + object.opponent + "</p>" +
         "<table class='table'>" +
         "<tr>";
@@ -98,13 +96,16 @@ Controller.printBoardLayout = function(){
         html += "</tr>" + "</table>" +
         "<p>" + object.player + "</p>";
         $("#board").html(html);
+    })
+    .fail(function(data) {
+        alert(data.responseJSON.message);
+        if (data.responseJSON.status == 307)
+            window.location.href = "/";
     });
 }
 Controller.printUnClickableBoardLayout = function(){
     var url = Controller.createGameUrl + Controller.gameId + "/" + Controller.player;
     $.get(url, function(object) {
-        var board = $("#board");
-        board.css("visibility", "visible ");
         var html = "<p>" + object.opponent + "</p>" +
         "<table class='table'>" +
         "<tr>";
@@ -128,6 +129,9 @@ Controller.printUnClickableBoardLayout = function(){
         html += "</tr>" + "</table>" +
         "<p>" + object.player + "</p>";
         $("#board").html(html);
+    })
+    .fail(function(data) {
+        alert(data.responseJSON.message);
     });
 }
 Controller.makeMove = function(pit){
@@ -144,10 +148,15 @@ Controller.makeMove = function(pit){
                     Controller.printBoardLayout();
                     clearInterval(timer);
                 }
+            })
+            .fail(function(data) {
+                alert(data.responseJSON.message);
+                if (data.responseJSON.status == 307)
+                    window.location.href = "/";
             });
         }, 5000);
     })
     .fail(function(data) {
-        alert(data.responseText);
+        alert(data.responseJSON.message);
     });
 }
