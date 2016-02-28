@@ -59,8 +59,10 @@ public class ControllerApi {
             throws NoSuchIdException, CantAddMorePlayerException {
         idCheck(id);
         KalahGame kalahGame = cash.getGame(id);
+        //message to start for initiator player
+        if (kalahGame.containsPlayer(player) && kalahGame.containsTwoPlayers())
+            return true;
         kalahGame.addPlayer(player);
-        //kalahGame.addPlayer("ai");
         return kalahGame.containsTwoPlayers();
     }
 

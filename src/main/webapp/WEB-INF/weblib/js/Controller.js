@@ -35,6 +35,10 @@ Controller.createGame = function(){
         $("#id").append(data);
     });
 }
+Controller.hideAvailableGames = function(){
+    $('input[type="button"]').css('visibility', 'hidden');
+    $("#list").html("");
+}
 Controller.registerPlayer = function(id){
     if (Controller.inputIsValid()){
         Controller.player = Controller.getInput();
@@ -42,8 +46,19 @@ Controller.registerPlayer = function(id){
             Controller.gameId = id;
         var url = Controller.createGameUrl + Controller.gameId + "/" + Controller.player;
         $.post(url, function(status) {
-            if(status){
+            Controller.hideAvailableGames();
+            if(status)
                 Controller.printBoardLayout();
+            else{
+                alert("Waiting for opponent");
+                var timer = setInterval(function(){
+                    $.post(url, function(status2) {
+                        if (status2){
+                            Controller.printBoardLayout();
+                            clearInterval(timer);
+                        }
+                    });
+                }, 5000);
             }
         })
         .fail(function(data) {
