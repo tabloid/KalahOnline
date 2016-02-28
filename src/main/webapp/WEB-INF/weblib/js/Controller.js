@@ -7,7 +7,7 @@ Controller.player;
 Controller.cleanInput = function(){
     $("input[type='text']").val("");
 }
-Controllers.inputIsValid = function(){
+Controller.inputIsValid = function(){
     var name = $("input[type='text']");
     if (name.val() == ""){
         alert("Enter player name")

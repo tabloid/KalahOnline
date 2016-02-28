@@ -10,7 +10,7 @@
 <script src="weblib/js/Controller.js"></script>
 
 </head>
-<body onload="Controller.getAvailableGames(); Controller.cleanInput();Controller.createGame()">
+<body onload="Controller.getAvailableGames(); Controller.cleanInput(); Controller.createGame()">
 	<div class="container">
 		<div class="header">
         	<h3 class="text-muted">Kalah project</h3>
