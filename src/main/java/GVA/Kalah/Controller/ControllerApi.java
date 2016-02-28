@@ -60,7 +60,7 @@ public class ControllerApi {
         idCheck(id);
         KalahGame kalahGame = cash.getGame(id);
         kalahGame.addPlayer(player);
-        kalahGame.addPlayer("ai");
+        //kalahGame.addPlayer("ai");
         return kalahGame.containsTwoPlayers();
     }
 
