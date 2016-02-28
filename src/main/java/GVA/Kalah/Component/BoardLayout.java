@@ -11,12 +11,12 @@ public class BoardLayout {
     public String opponent;
     public PlayerBoard opponentBoard;
 
-    public  void setPlayerInfo(String player, PlayerBoard playerBoard){
+    public void setPlayerInfo(String player, PlayerBoard playerBoard) {
         this.player = player;
         this.playerBoard = playerBoard;
     }
 
-    public  void setOpponentInfo(String opponent, PlayerBoard opponentBoard){
+    public void setOpponentInfo(String opponent, PlayerBoard opponentBoard) {
         this.opponent = opponent;
         this.opponentBoard = opponentBoard;
     }

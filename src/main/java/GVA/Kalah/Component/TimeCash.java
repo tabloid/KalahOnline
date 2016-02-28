@@ -21,22 +21,22 @@ public class TimeCash {
 
     public long addGame(KalahGame kalahGame) {
         long id;
-        synchronized (map){
+        synchronized (map) {
             id = System.currentTimeMillis();
             map.put(id, kalahGame);
         }
         return id;
     }
 
-    public List<Long> getAvailableGames(){
+    public List<Long> getAvailableGames() {
         List<Long> list = new ArrayList<>();
-        synchronized (map){
+        synchronized (map) {
             Iterator<Map.Entry<Long, KalahGame>> iterator = map.entrySet().iterator();
             while (iterator.hasNext()) {
                 Map.Entry<Long, KalahGame> entry = iterator.next();
                 long id = entry.getKey();
                 KalahGame kalahGame = entry.getValue();
-                if (! kalahGame.containsTwoPlayers())
+                if (!kalahGame.containsTwoPlayers())
                     list.add(id);
             }
         }

@@ -4,7 +4,6 @@ import GVA.Kalah.Exception.CantAddMorePlayerException;
 import GVA.Kalah.Exception.EmptyPitException;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -86,7 +85,7 @@ public class KalahGame {
         String msg = null;
         PlayerBoard playerBoard = map.get(player);
         PlayerBoard opponentBoard = getOpponentPlayerBoard(player);
-        if (playerBoard.allPitsAreEmpty() || opponentBoard.allPitsAreEmpty()){
+        if (playerBoard.allPitsAreEmpty() || opponentBoard.allPitsAreEmpty()) {
             if (playerBoard.getTotalStones() > opponentBoard.getTotalStones())
                 msg = player + " has won! Total stones " + playerBoard.getTotalStones();
             else if (playerBoard.getTotalStones() < opponentBoard.getTotalStones())
