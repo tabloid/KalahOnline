@@ -36,7 +36,7 @@ Controller.createGame = function(){
     });
 }
 Controller.registerPlayer = function(id){
-    if (Controllers.inputIsValid()){
+    if (Controller.inputIsValid()){
         Controller.player = Controller.getInput();
         if (id !== undefined)
             Controller.gameId = id;
