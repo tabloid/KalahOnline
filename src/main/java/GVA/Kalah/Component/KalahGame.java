@@ -56,14 +56,17 @@ public class KalahGame {
         while (stones > 0) {
             stones = playerBoard.putStonesInPits(start, stones);
 
-            //if player move stone to his empty pit, put opponents stones from opposite pit
+            //if player move stone to his empty pit,
+            // get opponents stones from opposite pit and his last stone to kalah
             if (playerBoard.isLastStoneCameToEmptyPit()) {
                 int lastPit = playerBoard.getLastPitPosition();
                 int opponentPit = (playerBoard.getPitsNumber() - 1) - lastPit;
-                System.out.println("LastPit " + lastPit);
-                System.out.println("opponentPit " + opponentPit);
-                int opponentStones = opponentBoard.pickStonesFromPit(opponentPit);
-                playerBoard.addStonesInKalah(opponentStones);
+                if(!opponentBoard.pitIsEmpty(opponentPit)){
+                    int opponentStones = opponentBoard.pickStonesFromPit(opponentPit);
+                    playerBoard.addStonesInKalah(opponentStones);
+                    int lastStone = playerBoard.pickStonesFromPit(lastPit);
+                    playerBoard.addStonesInKalah(lastStone);
+                }
             }
 
             //additional move when last stone came to kalah
