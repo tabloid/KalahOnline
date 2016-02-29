@@ -9,6 +9,7 @@ import java.util.*;
  */
 @Component
 public class TimeCash {
+    private Random random = new Random();
     private long liveTime = 1000 * 60 * 5;
     private final Map<Long, KalahGame> map =
             Collections.synchronizedMap(new HashMap<Long, KalahGame>());
@@ -22,7 +23,7 @@ public class TimeCash {
     public long addGame(KalahGame kalahGame) {
         long id;
         synchronized (map) {
-            id = System.currentTimeMillis();
+            id = random.nextInt(Integer.MAX_VALUE) + (long)(0.1 * System.currentTimeMillis());
             map.put(id, kalahGame);
         }
         return id;
